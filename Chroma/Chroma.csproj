@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View\Fonts\Roboto-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
 
 </Project>
