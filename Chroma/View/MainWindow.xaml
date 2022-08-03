@@ -11,7 +11,7 @@
 		MinWidth="300" MinHeight="200"
 		MaxWidth="800" MaxHeight="1000">
 	<Window.DataContext>
-		<vm:MainWindowViewModel CurrentColour="Red"/>
+		<vm:MainWindowViewModel/>
 	</Window.DataContext>
 	<Window.Resources>
 		<ResourceDictionary>
@@ -22,9 +22,9 @@
 	</Window.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="5*"/>
+			<ColumnDefinition MinWidth="100" Width="5*"/>
 			<ColumnDefinition Width="8"/>
-			<ColumnDefinition Width="200"/>
+			<ColumnDefinition MinWidth="50" Width="200"/>
 		</Grid.ColumnDefinitions>
 		<Grid>
 			<Grid.RowDefinitions>
@@ -33,7 +33,7 @@
 			</Grid.RowDefinitions>
 			<Border Margin="10" CornerRadius="5">
 				<Border.Background>
-					<SolidColorBrush Color="{Binding CurrentColour}"/>
+					<SolidColorBrush Color="{Binding CurrentColour.Colour}"/>
 				</Border.Background>
 			</Border>
 			<Grid Grid.Row="1" Margin="10">
@@ -46,6 +46,7 @@
 				</Grid.RowDefinitions>
 				<StackPanel>
 					<StackPanel Margin="0 0 10 0">
+						<Slider Value="{Binding A}" Minimum="0" Maximum="255" Margin="0 0 0 5"/>
 						<Slider Value="{Binding R}" Minimum="0" Maximum="255" Margin="0 0 0 5"/>
 						<Slider Value="{Binding G}" Minimum="0" Maximum="255" Margin="0 0 0 5"/>
 						<Slider Value="{Binding B}" Minimum="0" Maximum="255"/>
@@ -80,8 +81,19 @@
 				<RowDefinition Height="23"/>
 				<RowDefinition Height="100"/>
 			</Grid.RowDefinitions>
-			<ListBox>
-				
+			<ListBox SelectedItem="{Binding CurrentColour}" TextBlock.FontFamily="{StaticResource MainFont}" ItemsSource="{Binding SavedColours}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<Border Width="18" Height="18" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
+								<Border.Background>
+									<SolidColorBrush Color="{Binding Colour}"/>
+								</Border.Background>
+							</Border>
+							<TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding Name}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
 			</ListBox>
 			<UniformGrid Margin="0 4 0 0" Columns="3" Grid.Row="1">
 				<Button Margin="0 0 2 0"/>
