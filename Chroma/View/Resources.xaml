@@ -1,4 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:convert="clr-namespace:Chroma.View.Converters">
 	<FontFamily x:Key="MainFont">pack://application:,,,/View/Fonts/#Roboto</FontFamily>
+	<convert:ARGBColourConverter x:Key="argbConverter"/>
+	<convert:RGBColourConverter x:Key="rgbConverter"/>
+	<convert:AHexColourConverter x:Key="aHexConverter"/>
+	<convert:HexColourConverter x:Key="hexConverter"/>
 </ResourceDictionary>

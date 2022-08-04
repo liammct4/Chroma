@@ -7,7 +7,7 @@
 		xmlns:vm="clr-namespace:Chroma.ViewModel"
 		mc:Ignorable="d"
 		Title="Chroma"
-		Height="450" Width="500"
+		Height="450" Width="550"
 		MinWidth="300" MinHeight="200"
 		MaxWidth="800" MaxHeight="1000">
 	<Window.DataContext>
@@ -44,7 +44,7 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<StackPanel>
+				<StackPanel Margin="0 0 10 0">
 					<!-- Sliders -->
 					<Grid Margin="0 0 10 0">
 						<Grid.Resources>
@@ -73,13 +73,39 @@
 						<Slider Value="{Binding A}"/>
 						<!-- Red Slider -->
 						<TextBlock Grid.Row="1" Text="R"/>
-						<Slider Grid.Row="1" Value="{Binding R}" />
+						<Slider Grid.Row="1" Value="{Binding R, Mode=TwoWay}" />
 						<!-- Green Slider -->
 						<TextBlock Grid.Row="2" Text="G"/>
 						<Slider Grid.Row="2" Value="{Binding G}"/>
 						<!-- Blue Slider -->
 						<TextBlock Grid.Row="3" Text="B"/>
 						<Slider Grid.Row="3" Value="{Binding B}"/>
+					</Grid>
+					<!-- Colour text boxes -->
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="10"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+						<!-- RGB text box -->
+						<TextBlock Text="RGB"/>
+						<TextBox Grid.Row="1" Text="{Binding Colour, Converter={StaticResource rgbConverter}}"/>
+						<!-- ARGB text box -->
+						<TextBlock Grid.Row="2" Text="ARGB"/>
+						<TextBox Grid.Row="3" Text="{Binding Colour, Converter={StaticResource argbConverter}}"/>
+						<!-- Hex text box -->
+						<TextBlock Grid.Column="2" Text="Hex (RGB)"/>
+						<TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Colour, Converter={StaticResource hexConverter}}"/>
+						<!-- Hex (Alpha) text box -->
+						<TextBlock Grid.Column="2" Grid.Row="2" Text="Hex (ARGB)"/>
+						<TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Colour, Converter={StaticResource aHexConverter}}"/>
 					</Grid>
 				</StackPanel>
 				<!-- Colour spectrum slider -->
