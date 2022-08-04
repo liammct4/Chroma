@@ -131,7 +131,11 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public void DuplicateColour(object? parameter)
 		{
-			throw new NotImplementedException();
+			// Since Color is a struct and structs are pass by value, no manual copying needed.
+			Color duplicated = CurrentColour.Colour;
+
+			ColourItem newItem = new() { Colour = duplicated };
+			SavedColours.Add(newItem);
 		}
 
 		/// <summary>
