@@ -51,10 +51,7 @@ namespace Chroma.ViewModel
 		/// <summary>
 		/// Triggered when the add button is pressed underneath the colour group.
 		/// </summary>
-		public void AddColour(object? parameter)
-		{
-			throw new NotImplementedException();
-		}
+		public void AddColour(object? parameter) => SavedColours.Add(new ColourItem());
 
 		/// <summary>
 		/// Triggered when the remove button is pressed underneath the colour group.

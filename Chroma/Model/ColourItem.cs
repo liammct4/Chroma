@@ -11,6 +11,8 @@ namespace Chroma.Model
 	public class ColourItem : INotifyPropertyChanged
 	{
 		internal static int ColourCount = 1;
+		private static Random colourRandom = new();
+
 		public Color Colour
 		{
 			get => _colour;
@@ -34,7 +36,7 @@ namespace Chroma.Model
 
 		public ColourItem()
 		{
-			Colour = Color.FromRgb(255, 255, 255);
+			Colour = GenerateRandomColor();
 			Name = $"New Colour {ColourCount++}";
 		}
 
@@ -46,5 +48,14 @@ namespace Chroma.Model
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 		public void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new(propertyName));
+
+		public static Color GenerateRandomColor()
+		{
+			byte r = (byte)colourRandom.Next(0, 255);
+			byte g = (byte)colourRandom.Next(0, 255);
+			byte b = (byte)colourRandom.Next(0, 255);
+
+			return Color.FromRgb(r, g, b);
+		}
 	}
 }
