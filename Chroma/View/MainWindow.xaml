@@ -46,10 +46,19 @@
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 				<StackPanel Margin="0 0 10 0">
+					<StackPanel.Resources>
+						<Style x:Key="ColourEditControl" TargetType="{x:Type Control}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
+									<Setter Property="IsEnabled" Value="False"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</StackPanel.Resources>
 					<!-- Sliders -->
 					<Grid Margin="0 0 10 0">
 						<Grid.Resources>
-							<Style TargetType="{x:Type Slider}">
+							<Style TargetType="{x:Type Slider}" BasedOn="{StaticResource ColourEditControl}">
 								<Setter Property="Minimum" Value="0"/>
 								<Setter Property="Maximum" Value="255"/>
 								<Setter Property="Grid.Column" Value="1"/>
@@ -84,6 +93,15 @@
 					</Grid>
 					<!-- Colour text boxes -->
 					<Grid>
+						<Grid.Resources>
+							<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColourEditControl}">
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
+										<Setter Property="Foreground" Value="White"/>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Grid.Resources>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="10"/>
