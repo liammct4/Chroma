@@ -40,15 +40,32 @@ namespace Chroma.ViewModel
 		/// Each button provides its own converter to create the string to place in the clipboard.
 		/// </summary>
 		public ICommand CopyColourButtonCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the duplicate button has been pressed.
+		/// </summary>
+		public ICommand DuplicateButtonCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the move up button has been pressed.
+		/// </summary>
+		public ICommand ColoursMoveUpButtonCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the move down button has been pressed.
+		/// </summary>
+		public ICommand ColoursMoveDownButtonCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
+			Func<object, bool> colourRequiredCondition = x => CurrentColour is not null;
+
 			// Link commands.
 			AddColourCommand = new RelayCommand(AddColour, x => true);
-			RemoveColourCommand = new RelayCommand(RemoveColour, x => CurrentColour is not null);
-			RenameColourCommand = new RelayCommand(RenameColour, x => CurrentColour is not null);
+			RemoveColourCommand = new RelayCommand(RemoveColour, colourRequiredCondition);
+			RenameColourCommand = new RelayCommand(RenameColour, colourRequiredCondition);
 			ColourEditBoxEnterCommand = new RelayCommand(ColourEditBoxEnter, x => IsEdit);
-			CopyColourButtonCommand = new RelayCommand(CopyColour, x => CurrentColour is not null);
+			CopyColourButtonCommand = new RelayCommand(CopyColour, colourRequiredCondition);
+			DuplicateButtonCommand = new RelayCommand(DuplicateColour, colourRequiredCondition);
+			ColoursMoveUpButtonCommand = new RelayCommand(MoveUp, colourRequiredCondition);
+			ColoursMoveDownButtonCommand = new RelayCommand(MoveDown, colourRequiredCondition);
 
 			// Test data.
 			SavedColours = new ObservableCollection<ColourItem>()
@@ -105,6 +122,36 @@ namespace Chroma.ViewModel
 			string colourString = (string)converter.Convert(CurrentColour.Colour, typeof(Color), null, CultureInfo.CurrentCulture);
 
 			Clipboard.SetText(colourString);
+		}
+
+		/// <summary>
+		/// Triggered when the duplicate colour button is pressed.
+		/// 
+		/// If no colour is selected, the command isn't ran.
+		/// </summary>
+		public void DuplicateColour(object? parameter)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Triggered when the move up button is pressed.
+		/// 
+		/// If no colour is selected, the command isn't ran.
+		/// </summary>
+		public void MoveUp(object? parameter)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Triggered when the move down button is pressed.
+		/// 
+		/// If no colour is selected, the command isn't ran.
+		/// </summary>
+		public void MoveDown(object? parameter)
+		{
+			throw new NotImplementedException();
 		}
 		#endregion
 		#region Binding Properties
