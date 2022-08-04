@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -32,6 +34,12 @@ namespace Chroma.ViewModel
 		/// Command triggered when renaming a colour and the user presses enter signalling to stop renaming.
 		/// </summary>
 		public ICommand ColourEditBoxEnterCommand { get; set; }
+		/// <summary>
+		/// Command triggered when a copy colour button is pressed alongside a colour text box (rgb, argb, hex etc).
+		/// 
+		/// Each button provides its own converter to create the string to place in the clipboard.
+		/// </summary>
+		public ICommand CopyColourButtonCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
@@ -40,6 +48,7 @@ namespace Chroma.ViewModel
 			RemoveColourCommand = new RelayCommand(RemoveColour, x => CurrentColour is not null);
 			RenameColourCommand = new RelayCommand(RenameColour, x => CurrentColour is not null);
 			ColourEditBoxEnterCommand = new RelayCommand(ColourEditBoxEnter, x => IsEdit);
+			CopyColourButtonCommand = new RelayCommand(CopyColour, x => CurrentColour is not null);
 
 			// Test data.
 			SavedColours = new ObservableCollection<ColourItem>()
@@ -80,9 +89,22 @@ namespace Chroma.ViewModel
 		/// 
 		/// Only applied if in edit mode.
 		/// </summary>
-		public void ColourEditBoxEnter(object parameter)
+		public void ColourEditBoxEnter(object? parameter)
 		{
 			IsEdit = false;
+		}
+
+		/// <summary>
+		/// Triggered when a "copy to clipboard" button is pressed.
+		/// </summary>
+		/// <param name="parameter">The converter which will generate the string to set in the clipboard.</param>
+		public void CopyColour(object? parameter)
+		{
+			IValueConverter converter = (IValueConverter)parameter;
+
+			string colourString = (string)converter.Convert(CurrentColour.Colour, typeof(Color), null, CultureInfo.CurrentCulture);
+
+			Clipboard.SetText(colourString);
 		}
 		#endregion
 		#region Binding Properties

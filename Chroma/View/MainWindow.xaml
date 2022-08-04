@@ -96,11 +96,17 @@
 					<Grid>
 						<Grid.Resources>
 							<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColourEditControl}">
+								<Setter Property="Margin" Value="0 0 0 0"/>
 								<Style.Triggers>
 									<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
 										<Setter Property="Foreground" Value="White"/>
 									</DataTrigger>
 								</Style.Triggers>
+							</Style>
+							<Style TargetType="{x:Type Button}">
+								<Setter Property="Margin" Value="-1 0 0 0"/>
+								<Setter Property="Panel.ZIndex" Value="1"/>
+								<Setter Property="Width" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"/>
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
@@ -116,16 +122,28 @@
 						</Grid.RowDefinitions>
 						<!-- RGB text box -->
 						<TextBlock Text="RGB" Margin="0 0 0 2"/>
-						<TextBox Grid.Row="1" Text="{Binding Colour, Converter={StaticResource rgbConverter}}"/>
+						<DockPanel Grid.Row="1">
+							<Button DockPanel.Dock="Right" Command="{Binding CopyColourButtonCommand}" CommandParameter="{StaticResource rgbConverter}"/>
+							<TextBox Text="{Binding Colour, Converter={StaticResource rgbConverter}}"/>
+						</DockPanel>
 						<!-- ARGB text box -->
 						<TextBlock Margin="0 4 0 2" Grid.Row="2" Text="ARGB"/>
-						<TextBox Grid.Row="3" Text="{Binding Colour, Converter={StaticResource argbConverter}}"/>
+						<DockPanel Grid.Row="3">
+							<Button DockPanel.Dock="Right" Command="{Binding CopyColourButtonCommand}" CommandParameter="{StaticResource argbConverter}"/>
+							<TextBox Text="{Binding Colour, Converter={StaticResource argbConverter}}"/>
+						</DockPanel>
 						<!-- Hex text box -->
 						<TextBlock Margin="0 0 0 2" Grid.Column="2" Text="Hex (RGB)"/>
-						<TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Colour, Converter={StaticResource hexConverter}}"/>
+						<DockPanel Grid.Column="2" Grid.Row="1">
+							<Button DockPanel.Dock="Right" Command="{Binding CopyColourButtonCommand}" CommandParameter="{StaticResource hexConverter}"/>
+							<TextBox Text="{Binding Colour, Converter={StaticResource hexConverter}}"/>
+						</DockPanel>
 						<!-- Hex (Alpha) text box -->
 						<TextBlock Margin="0 4 0 2" Grid.Column="2" Grid.Row="2" Text="Hex (ARGB)"/>
-						<TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Colour, Converter={StaticResource aHexConverter}}"/>
+						<DockPanel Grid.Column="2" Grid.Row="3">
+							<Button DockPanel.Dock="Right" Command="{Binding CopyColourButtonCommand}" CommandParameter="{StaticResource aHexConverter}"/>
+							<TextBox Text="{Binding Colour, Converter={StaticResource aHexConverter}}"/>
+						</DockPanel>
 					</Grid>
 				</StackPanel>
 				<!-- Colour spectrum slider -->
