@@ -96,6 +96,7 @@ namespace Chroma.ViewModel
 				OnPropertyChanged(nameof(R));
 				OnPropertyChanged(nameof(G));
 				OnPropertyChanged(nameof(B));
+				RelayCommand.RaiseCanExecuteChanged();
 			}
 		}
 		private ColourItem _currentColour;
@@ -154,5 +155,6 @@ namespace Chroma.ViewModel
 			}
 		}
 		#endregion
+		
 	}
 }

@@ -7,7 +7,20 @@ namespace Chroma.ViewModel
 	{
 		private Action<object> execute;
 		private Func<object, bool> canExecute;
-		public event EventHandler? CanExecuteChanged;
+		public event EventHandler? CanExecuteChanged
+		{
+			add
+			{
+				_canExecuteChanged += value;
+				CommandManager.RequerySuggested += value;
+			}
+			remove
+			{
+				_canExecuteChanged -= value;
+				CommandManager.RequerySuggested -= value;
+			}
+		}
+		private EventHandler? _canExecuteChanged;
 
 		public RelayCommand(Action<object> execute, Func<object, bool> canExecute)
 		{
@@ -18,5 +31,10 @@ namespace Chroma.ViewModel
 		public bool CanExecute(object? parameter) => canExecute(parameter);
 
 		public void Execute(object? parameter) => execute(parameter);
+
+		public static void RaiseCanExecuteChanged()
+		{
+			CommandManager.InvalidateRequerySuggested();
+		}
 	}
 }
