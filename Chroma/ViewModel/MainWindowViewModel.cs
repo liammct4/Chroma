@@ -16,8 +16,26 @@ namespace Chroma.ViewModel
 	/// </summary>
 	public class MainWindowViewModel : ViewModelBase
 	{
+		/// <summary>
+		/// Command triggered when the "Add" button is pressed underneath the colour group.
+		/// </summary>
+		public ICommand AddColourCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the "Remove" button is pressed underneath the colour group.
+		/// </summary>
+		public ICommand RemoveColourCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the "Rename" button is pressed underneath the colour group.
+		/// </summary>
+		public ICommand RenameColourCommand { get; set; }
+
 		public MainWindowViewModel()
 		{
+			// Link commands.
+			AddColourCommand = new RelayCommand(AddColour, x => true);
+			RemoveColourCommand = new RelayCommand(RemoveColour, x => CurrentColour is not null);
+			RenameColourCommand = new RelayCommand(RenameColour, x => CurrentColour is not null);
+
 			// Test data.
 			SavedColours = new ObservableCollection<ColourItem>()
 			{
@@ -28,6 +46,37 @@ namespace Chroma.ViewModel
 				new ColourItem() { Colour = Color.FromArgb(255, 255, 110, 100) },
 			};
 		}
+
+		#region Commands
+		/// <summary>
+		/// Triggered when the add button is pressed underneath the colour group.
+		/// </summary>
+		public void AddColour(object? parameter)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Triggered when the remove button is pressed underneath the colour group.
+		/// 
+		/// If no colour is selected, nothing happens.
+		/// </summary>
+		public void RemoveColour(object? parameter)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Triggered when the rename button is pressed underneath the colour group.
+		/// 
+		/// If no colour is selected, nothing happens.
+		/// </summary>
+		public void RenameColour(object? parameter)
+		{
+			throw new NotImplementedException();
+		}
+		#endregion
+		#region Binding Properties
 		public ObservableCollection<ColourItem> SavedColours
 		{
 			get => _savedColours;
@@ -107,5 +156,6 @@ namespace Chroma.ViewModel
 				OnPropertyChanged(nameof(Colour));
 			}
 		}
+		#endregion
 	}
 }
