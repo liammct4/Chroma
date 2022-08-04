@@ -145,7 +145,14 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public void MoveUp(object? parameter)
 		{
-			throw new NotImplementedException();
+			int index = SavedColours.IndexOf(CurrentColour);
+
+			if (index == 0)
+			{
+				return;
+			}
+
+			SavedColours.Move(index, index - 1);
 		}
 
 		/// <summary>
@@ -155,7 +162,14 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public void MoveDown(object? parameter)
 		{
-			throw new NotImplementedException();
+			int index = SavedColours.IndexOf(CurrentColour);
+
+			if (index + 1 > SavedColours.Count - 1)
+			{
+				return;
+			}
+
+			SavedColours.Move(index, index + 1);
 		}
 		#endregion
 		#region Binding Properties
