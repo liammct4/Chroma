@@ -56,17 +56,14 @@ namespace Chroma.ViewModel
 		/// <summary>
 		/// Triggered when the remove button is pressed underneath the colour group.
 		/// 
-		/// If no colour is selected, nothing happens.
+		/// If no colour is selected, this method isn't ran.
 		/// </summary>
-		public void RemoveColour(object? parameter)
-		{
-			throw new NotImplementedException();
-		}
+		public void RemoveColour(object? parameter) => SavedColours.Remove(CurrentColour);
 
 		/// <summary>
 		/// Triggered when the rename button is pressed underneath the colour group.
 		/// 
-		/// If no colour is selected, nothing happens.
+		/// If no colour is selected, this method isn't ran.
 		/// </summary>
 		public void RenameColour(object? parameter)
 		{
