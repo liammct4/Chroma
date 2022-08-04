@@ -28,6 +28,10 @@ namespace Chroma.ViewModel
 		/// Command triggered when the "Rename" button is pressed underneath the colour group.
 		/// </summary>
 		public ICommand RenameColourCommand { get; set; }
+		/// <summary>
+		/// Command triggered when renaming a colour and the user presses enter signalling to stop renaming.
+		/// </summary>
+		public ICommand ColourEditBoxEnterCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
@@ -35,6 +39,7 @@ namespace Chroma.ViewModel
 			AddColourCommand = new RelayCommand(AddColour, x => true);
 			RemoveColourCommand = new RelayCommand(RemoveColour, x => CurrentColour is not null);
 			RenameColourCommand = new RelayCommand(RenameColour, x => CurrentColour is not null);
+			ColourEditBoxEnterCommand = new RelayCommand(ColourEditBoxEnter, x => IsEdit);
 
 			// Test data.
 			SavedColours = new ObservableCollection<ColourItem>()
@@ -67,7 +72,17 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public void RenameColour(object? parameter)
 		{
-			throw new NotImplementedException();
+			IsEdit = true;
+		}
+
+		/// <summary>
+		/// Triggered when the user presses the enter key when renaming a colour.
+		/// 
+		/// Only applied if in edit mode.
+		/// </summary>
+		public void ColourEditBoxEnter(object parameter)
+		{
+			IsEdit = false;
 		}
 		#endregion
 		#region Binding Properties
@@ -87,6 +102,7 @@ namespace Chroma.ViewModel
 			set
 			{
 				_currentColour = value;
+				IsEdit = false;
 				OnPropertyChanged(nameof(CurrentColour));
 				OnPropertyChanged(nameof(Colour));
 				OnPropertyChanged(nameof(A));
@@ -111,6 +127,16 @@ namespace Chroma.ViewModel
 				OnPropertyChanged(nameof(B));
 			}
 		}
+		public bool IsEdit
+		{
+			get => _isEdit;
+			set
+			{
+				_isEdit = value;
+				OnPropertyChanged(nameof(IsEdit));
+			}
+		}
+		private bool _isEdit;
 		public int A
 		{
 			get => CurrentColour is null ? 255 : CurrentColour.Colour.A;
@@ -123,7 +149,7 @@ namespace Chroma.ViewModel
 		}
 		public int R
 		{
-			get => CurrentColour is null ? 100 : CurrentColour.Colour.R;
+			get => CurrentColour is null ? 255 : CurrentColour.Colour.R;
 			set
 			{
 				CurrentColour.Colour = Color.FromArgb(CurrentColour.Colour.A, (byte)value, CurrentColour.Colour.G, CurrentColour.Colour.B);
