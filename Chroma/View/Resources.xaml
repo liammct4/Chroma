@@ -6,4 +6,6 @@
 	<convert:RGBColourConverter x:Key="rgbConverter"/>
 	<convert:AHexColourConverter x:Key="aHexConverter"/>
 	<convert:HexColourConverter x:Key="hexConverter"/>
+	<convert:BrightenedColourConverter x:Key="gradientConverter"/>
+	<convert:GradientScaleConverter x:Key="gradientScaleConverter"/>
 </ResourceDictionary>

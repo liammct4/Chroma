@@ -46,8 +46,8 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<StackPanel Margin="0 0 10 0">
-					<StackPanel.Resources>
+				<DockPanel Margin="0 0 10 0">
+					<DockPanel.Resources>
 						<Style x:Key="ColourEditControl" TargetType="{x:Type Control}">
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
@@ -55,9 +55,9 @@
 								</DataTrigger>
 							</Style.Triggers>
 						</Style>
-					</StackPanel.Resources>
+					</DockPanel.Resources>
 					<!-- Sliders -->
-					<Grid Margin="0 0 10 0">
+					<Grid Margin="0 0 10 0" DockPanel.Dock="Top">
 						<Grid.Resources>
 							<Style TargetType="{x:Type Slider}" BasedOn="{StaticResource ColourEditControl}">
 								<Setter Property="Minimum" Value="0"/>
@@ -93,7 +93,7 @@
 						<Slider Grid.Row="3" Value="{Binding B}"/>
 					</Grid>
 					<!-- Colour text boxes -->
-					<Grid>
+					<Grid DockPanel.Dock="Top">
 						<Grid.Resources>
 							<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ColourEditControl}">
 								<Setter Property="Margin" Value="0 0 0 0"/>
@@ -145,7 +145,16 @@
 							<TextBox Text="{Binding Colour, Converter={StaticResource aHexConverter}}"/>
 						</DockPanel>
 					</Grid>
-				</StackPanel>
+					<!-- This may be replaced with a different type of slider in the future. -->
+					<Slider Value="{Binding Colour, Converter={StaticResource gradientScaleConverter}}" Minimum="0" Maximum="255" Height="20" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+						<Slider.Background>
+							<LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+								<GradientStop Color="Black"/>
+								<GradientStop Offset="1" Color="{Binding CurrentColour.Colour, Converter={StaticResource gradientConverter}}"/>
+							</LinearGradientBrush>
+						</Slider.Background>
+					</Slider>
+				</DockPanel>
 				<!-- Colour spectrum slider -->
 				<Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
 					<Border.Background>

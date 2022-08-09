@@ -1,4 +1,5 @@
 ﻿using Chroma.Model;
+using Chroma.View.Converters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -55,6 +56,7 @@ namespace Chroma.ViewModel
 
 		public MainWindowViewModel()
 		{
+			GradientScaleConverter.ViewModel = this;
 			Func<object, bool> colourRequiredCondition = x => CurrentColour is not null;
 
 			// Link commands.
