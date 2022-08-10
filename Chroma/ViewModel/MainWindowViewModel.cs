@@ -53,6 +53,10 @@ namespace Chroma.ViewModel
 		/// Command triggered when the move down button has been pressed.
 		/// </summary>
 		public ICommand ColoursMoveDownButtonCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the randomize button has been pressed.
+		/// </summary>
+		public ICommand RandomizeColourButtonCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
@@ -68,6 +72,7 @@ namespace Chroma.ViewModel
 			DuplicateButtonCommand = new RelayCommand(DuplicateColour, colourRequiredCondition);
 			ColoursMoveUpButtonCommand = new RelayCommand(MoveUp, colourRequiredCondition);
 			ColoursMoveDownButtonCommand = new RelayCommand(MoveDown, colourRequiredCondition);
+			RandomizeColourButtonCommand = new RelayCommand(RandomizeColour, colourRequiredCondition);
 
 			// Test data.
 			SavedColours = new ObservableCollection<ColourItem>()
@@ -120,7 +125,6 @@ namespace Chroma.ViewModel
 		public void CopyColour(object? parameter)
 		{
 			IValueConverter converter = (IValueConverter)parameter;
-
 			string colourString = (string)converter.Convert(CurrentColour.Colour, typeof(Color), null, CultureInfo.CurrentCulture);
 
 			Clipboard.SetText(colourString);
@@ -172,6 +176,17 @@ namespace Chroma.ViewModel
 			}
 
 			SavedColours.Move(index, index + 1);
+		}
+
+		/// <summary>
+		/// Triggered when the randomize button is pressed.
+		/// 
+		/// If no colour is selected, the command isn't ran.
+		/// </summary>
+		public void RandomizeColour(object? parameter)
+		{
+			Color randomColour = ColourItem.GenerateRandomColor();
+			Colour = randomColour;
 		}
 		#endregion
 		#region Binding Properties

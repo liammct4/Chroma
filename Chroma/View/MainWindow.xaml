@@ -49,7 +49,7 @@
 						<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ColourEditControl}"/>
 					</StackPanel.Resources>
 					<!-- Randomize Button. -->
-					<Button Content="?" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+					<Button Content="?" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Command="{Binding RandomizeColourButtonCommand}">
 						<Button.ToolTip>
 							<ToolTip Content="Randomize"/>
 						</Button.ToolTip>
