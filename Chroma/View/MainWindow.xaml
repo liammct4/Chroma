@@ -147,6 +147,9 @@
 					</Grid>
 					<!-- This may be replaced with a different type of slider in the future. -->
 					<Slider Value="{Binding Colour, Converter={StaticResource gradientScaleConverter}}" Minimum="0" Maximum="255" Height="20" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+						<Slider.Style>
+							<Style TargetType="{x:Type Slider}" BasedOn="{StaticResource ColourEditControl}"/>
+						</Slider.Style>
 						<Slider.Background>
 							<LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
 								<GradientStop Color="Black"/>
