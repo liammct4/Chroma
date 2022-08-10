@@ -1,6 +1,4 @@
-﻿using Chroma.Model;
-using Chroma.View.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -11,6 +9,10 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Chroma.Model;
+using Chroma.View.Converters;
+using Chroma.Model.Functionality;
+using Chroma.Model.Utilities;
 
 namespace Chroma.ViewModel
 {
@@ -57,9 +59,14 @@ namespace Chroma.ViewModel
 		/// Command triggered when the randomize button has been pressed.
 		/// </summary>
 		public ICommand RandomizeColourButtonCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the colour picker button has been pressed.
+		/// </summary>
+		public ICommand ColourPickerButtonCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
+			Chroma.Model.Utilities.ColourUtilities.GetColourAtMousePoint();
 			GradientScaleConverter.ViewModel = this;
 			Func<object, bool> colourRequiredCondition = x => CurrentColour is not null;
 
@@ -73,6 +80,7 @@ namespace Chroma.ViewModel
 			ColoursMoveUpButtonCommand = new RelayCommand(MoveUp, colourRequiredCondition);
 			ColoursMoveDownButtonCommand = new RelayCommand(MoveDown, colourRequiredCondition);
 			RandomizeColourButtonCommand = new RelayCommand(RandomizeColour, colourRequiredCondition);
+			ColourPickerButtonCommand = new RelayCommand(StartColourPicker, colourRequiredCondition);
 
 			// Test data.
 			SavedColours = new ObservableCollection<ColourItem>()
@@ -83,6 +91,8 @@ namespace Chroma.ViewModel
 				new ColourItem() { Colour = Color.FromArgb(255, 10, 90, 110) },
 				new ColourItem() { Colour = Color.FromArgb(255, 255, 110, 100) },
 			};
+
+			MouseHook.MouseAction += ColourPickerClickEvent;
 		}
 
 		#region Commands
@@ -188,6 +198,29 @@ namespace Chroma.ViewModel
 			Color randomColour = ColourItem.GenerateRandomColor();
 			Colour = randomColour;
 		}
+
+		/// <summary>
+		/// Triggered when the colour picker button is pressed.
+		/// 
+		/// If no colour is selected, the command isn't ran.
+		/// </summary>
+		public void StartColourPicker(object? parameter)
+		{
+			IsColourPicker = true;
+			IsOnTop = true;
+		}
+
+		/// <summary>
+		/// Triggered when the <see cref="MouseHook.MouseAction"/> event is raised and the application is in ColourPicker Mode.
+		/// </summary>
+		public async void ColourPickerClickEvent(object sender, EventArgs e)
+		{
+			Colour = ColourUtilities.GetColourAtMousePoint();
+			IsColourPicker = false;
+
+			await Task.Delay(100);
+			IsOnTop = false;
+		}
 		#endregion
 		#region Binding Properties
 		public ObservableCollection<ColourItem> SavedColours
@@ -281,7 +314,35 @@ namespace Chroma.ViewModel
 				OnPropertyChanged(nameof(Colour));
 			}
 		}
+		public bool IsColourPicker
+		{
+			get => _isColourPicker;
+			set
+			{
+				_isColourPicker = value;
+				OnPropertyChanged(nameof(IsColourPicker));
+
+				if (value)
+				{
+					MouseHook.Start();
+				}
+				else
+				{
+					MouseHook.Stop();
+				}
+			}
+		}
+		private bool _isColourPicker;
+		public bool IsOnTop
+		{
+			get => _isOnTop;
+			set
+			{
+				_isOnTop = value;
+				OnPropertyChanged(nameof(IsOnTop));
+			}
+		}
+		private bool _isOnTop;
 		#endregion
-		
 	}
 }

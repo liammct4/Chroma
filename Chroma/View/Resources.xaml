@@ -8,4 +8,5 @@
 	<convert:HexColourConverter x:Key="hexConverter"/>
 	<convert:BrightenedColourConverter x:Key="gradientConverter"/>
 	<convert:GradientScaleConverter x:Key="gradientScaleConverter"/>
+	<convert:BooleanInverterConverter x:Key="booleanInverter"/>
 </ResourceDictionary>
