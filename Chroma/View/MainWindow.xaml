@@ -8,9 +8,9 @@
 		xmlns:vm="clr-namespace:Chroma.ViewModel"
 		mc:Ignorable="d"
 		Title="Chroma"
-		Height="450" Width="550"
-		MinWidth="300" MinHeight="200"
-		MaxWidth="800" MaxHeight="1000"
+		Height="350" Width="550"
+		MinWidth="300" MinHeight="350"
+		MaxWidth="800" MaxHeight="700"
 		WindowStartupLocation="CenterScreen"
 		Topmost="{Binding IsOnTop}">
 	<Window.DataContext>
@@ -174,7 +174,7 @@
 						</DockPanel>
 					</Grid>
 					<!-- This may be replaced with a different type of slider in the future. -->
-					<Slider Value="{Binding Colour, Converter={StaticResource gradientScaleConverter}}" Minimum="0" Maximum="255" Height="20" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+					<Slider Value="{Binding Colour, Converter={StaticResource gradientScaleConverter}}" Margin="0 10 0 0" Minimum="0" Maximum="255" Height="20" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
 						<Slider.Style>
 							<Style TargetType="{x:Type Slider}" BasedOn="{StaticResource ColourEditControl}"/>
 						</Slider.Style>
