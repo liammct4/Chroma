@@ -49,7 +49,13 @@
 				<!-- Action buttons. -->
 				<StackPanel Margin="0 0 5 0" Height="50" VerticalAlignment="Top" DockPanel.Dock="Left">
 					<StackPanel.Resources>
-						<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ColourEditControl}"/>
+						<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ThemedButton}">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
+									<Setter Property="IsEnabled" Value="False"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
 					</StackPanel.Resources>
 					<!-- Randomize Button. -->
 					<Button Content="?" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Command="{Binding RandomizeColourButtonCommand}">
@@ -138,10 +144,12 @@
 									</DataTrigger>
 								</Style.Triggers>
 							</Style>
-							<Style TargetType="{x:Type Button}">
+							<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ThemedButton}">
 								<Setter Property="Margin" Value="-1 0 0 0"/>
 								<Setter Property="Panel.ZIndex" Value="1"/>
 								<Setter Property="Width" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"/>
+								<Setter Property="Border.CornerRadius" Value="0"/>
+								<Setter Property="BorderBrush" Value="{StaticResource Application.Borders}"/>
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
@@ -278,7 +286,7 @@
 			<!-- Saved colour controls -->
 			<Grid Margin="0 4 0 0" Grid.Row="1">
 				<Grid.Resources>
-					<Style TargetType="{x:Type Button}">
+					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ThemedButton}">
 						<Setter Property="Margin" Value="1"/>
 					</Style>
 				</Grid.Resources>
@@ -302,7 +310,7 @@
 			<!-- Colour controls -->
 			<StackPanel Grid.Row="2" Margin="0 5 0 0">
 				<StackPanel.Resources>
-					<Style TargetType="{x:Type Button}">
+					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ThemedButton}">
 						<Setter Property="Width" Value="100"/>
 						<Setter Property="FontSize" Value="13"/>
 						<Setter Property="HorizontalAlignment" Value="Left"/>

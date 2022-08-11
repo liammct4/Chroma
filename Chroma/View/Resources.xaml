@@ -1,7 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:convert="clr-namespace:Chroma.View.Converters">
+	<!-- Theming. -->
+	<SolidColorBrush x:Key="Application.Primary" Color="#2b303b"/>
+	<SolidColorBrush x:Key="Application.Secondary" Color="#383d48"/>
+	<SolidColorBrush x:Key="Application.Borders" Color="#a6abb6"/>
+	<SolidColorBrush x:Key="Application.Content" Color="#fafaff"/>
 	<FontFamily x:Key="MainFont">pack://application:,,,/View/Fonts/#Roboto</FontFamily>
+	<!-- Converters -->
 	<convert:ARGBColourConverter x:Key="argbConverter"/>
 	<convert:RGBColourConverter x:Key="rgbConverter"/>
 	<convert:AHexColourConverter x:Key="aHexConverter"/>
@@ -9,18 +15,74 @@
 	<convert:BrightenedColourConverter x:Key="gradientConverter"/>
 	<convert:GradientScaleConverter x:Key="gradientScaleConverter"/>
 	<convert:BooleanInverterConverter x:Key="booleanInverter"/>
+	<!-- Themed Controls. -->
+	<Style x:Key="FocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<SolidColorBrush x:Key="Button.Static.Background" Color="#474b56"/>
+	<SolidColorBrush x:Key="Button.Static.Border" Color="#474b56"/>
+	<SolidColorBrush x:Key="Button.MouseOver.Background" Color="#3f434d"/>
+	<SolidColorBrush x:Key="Button.MouseOver.Border" Color="#3f434d"/>
+	<SolidColorBrush x:Key="Button.Pressed.Background" Color="#393c45"/>
+	<SolidColorBrush x:Key="Button.Pressed.Border" Color="#3f434d"/>
+	<SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+	<SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+	<SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+	<SolidColorBrush x:Key="Button.Foreground" Color="White"/>
+	<Style x:Key="ThemedButton" TargetType="{x:Type Button}">
+		<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+		<Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+		<Setter Property="Foreground" Value="{StaticResource Button.Foreground}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="SnapsToDevicePixels" Value="True"/>
+		<Setter Property="Border.CornerRadius" Value="3"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border x:Name="border" Margin="1" CornerRadius="{TemplateBinding Border.CornerRadius}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+						<Border x:Name="innerBorder" CornerRadius="{TemplateBinding Border.CornerRadius}" Margin="-1" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+							<ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</Border>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsDefaulted" Value="true">
+							<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+						</Trigger>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter Property="Background" TargetName="innerBorder" Value="{StaticResource Button.MouseOver.Background}"/>
+							<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter Property="Background" TargetName="innerBorder" Value="{StaticResource Button.Pressed.Background}"/>
+							<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+							<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+							<Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<!-- Other. -->
 	<Geometry x:Key="copyIconData">M 1.3229166 0 H 3.175 V 0.26458335 H 1.3229166 Z m 0 2.9104166 H 3.1712958 V 3.175 H 1.3229166 Z M 3.175 0 H 3.4395833 V 3.175 H 3.175 Z M 1.0583333 0 H 1.3229166 V 3.175 H 1.0583333 Z M 0.52916667 0.52916667 H 1.0583333 V 0.79374999 H 0.52916667 Z M 2.3812499 3.175 H 2.6458333 V 3.4395833 H 2.3812499 Z M 0.26458335 3.4395835 H 2.6458333 V 3.7041669 H 0.26458335 Z m 1.2e-7 -2.9104168 H 0.52916682 V 3.4395834 H 0.26458347 Z</Geometry>
 	<Style x:Key="copyIcon" TargetType="{x:Type Path}">
-		<Setter Property="Fill" Value="Black"/>
+		<Setter Property="Fill" Value="{StaticResource Application.Content}"/>
 		<Setter Property="Stretch" Value="Uniform"/>
 		<Setter Property="Width" Value="14"/>
 		<Setter Property="Height" Value="14"/>
 		<Setter Property="Data" Value="{StaticResource copyIconData}"/>
 		<Setter Property="SnapsToDevicePixels" Value="True"/>
 	</Style>
-	<!-- Theming. -->
-	<SolidColorBrush x:Key="Application.Primary" Color="#2b303b"/>
-	<SolidColorBrush x:Key="Application.Secondary" Color="#383d48"/>
-	<SolidColorBrush x:Key="Application.Borders" Color="#a6abb6"/>
-	<SolidColorBrush x:Key="Application.Content" Color="#fafaff"/>
 </ResourceDictionary>
