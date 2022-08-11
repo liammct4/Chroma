@@ -295,9 +295,18 @@
 			</Grid>
 			<!-- Colour controls -->
 			<StackPanel Grid.Row="2" Margin="0 5 0 0">
-				<Button Width="100" FontSize="13" Content="Clear Colours" HorizontalAlignment="Left" Margin="0 3" Height="20"/>
-				<Button Width="100" FontSize="13" Content="Export Colours" HorizontalAlignment="Left" Margin="0 3" Height="20"/>
-				<Button Width="100" FontSize="13" Content="Import Colours" HorizontalAlignment="Left" Margin="0 3" Height="20"/>
+				<StackPanel.Resources>
+					<Style TargetType="{x:Type Button}">
+						<Setter Property="Width" Value="100"/>
+						<Setter Property="FontSize" Value="13"/>
+						<Setter Property="HorizontalAlignment" Value="Left"/>
+						<Setter Property="Margin" Value="0 3"/>
+						<Setter Property="Height" Value="20"/>
+					</Style>
+				</StackPanel.Resources>
+				<Button Content="Clear Colours" Command="{Binding ClearColoursCommand}"/>
+				<Button Content="Export Colours"/>
+				<Button Content="Import Colours"/>
 			</StackPanel>
 		</Grid>
 	</Grid>

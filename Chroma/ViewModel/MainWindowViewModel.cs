@@ -68,6 +68,10 @@ namespace Chroma.ViewModel
 		/// Command triggered when the colour picker button has been pressed.
 		/// </summary>
 		public ICommand ColourPickerButtonCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the clear colours button has been pressed.
+		/// </summary>
+		public ICommand ClearColoursCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
@@ -85,6 +89,7 @@ namespace Chroma.ViewModel
 			ColoursMoveDownButtonCommand = new RelayCommand(MoveDown, colourRequiredCondition);
 			RandomizeColourButtonCommand = new RelayCommand(RandomizeColour, colourRequiredCondition);
 			ColourPickerButtonCommand = new RelayCommand(StartColourPicker, colourRequiredCondition);
+			ClearColoursCommand = new RelayCommand(ClearColours, x => true);
 
 			SavedColours = new ObservableCollection<ColourItem>(ColourItem.ExtractFromJSON(SavedColourFilePath));
 
@@ -204,6 +209,18 @@ namespace Chroma.ViewModel
 		{
 			IsColourPicker = true;
 			IsOnTop = true;
+		}
+
+		/// <summary>
+		/// Triggered when the clear colours button has been pressed.
+		/// </summary>
+		public void ClearColours(object? parameter)
+		{
+			MessageBoxResult result = MessageBox.Show("Are you sure you want to clear all colours?", "Confirm Clear", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (result == MessageBoxResult.Yes)
+			{
+				SavedColours.Clear();
+			}
 		}
 
 		/// <summary>
