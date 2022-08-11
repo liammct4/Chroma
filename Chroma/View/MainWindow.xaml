@@ -23,7 +23,9 @@
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Window.Resources>
-	<Grid IsEnabled="{Binding IsColourPicker, Converter={StaticResource booleanInverter}}" TextBlock.FontFamily="{StaticResource MainFont}">
+	<Grid IsEnabled="{Binding IsColourPicker, Converter={StaticResource booleanInverter}}" TextBlock.FontFamily="{StaticResource MainFont}"
+		Background="{StaticResource Application.Primary}"
+		TextBlock.Foreground="{StaticResource Application.Content}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition MinWidth="100" Width="5*"/>
 			<ColumnDefinition Width="8"/>
@@ -127,6 +129,9 @@
 								<Setter Property="Margin" Value="0 0 0 0"/>
 								<Setter Property="Height" Value="18"/>
 								<Setter Property="VerticalContentAlignment" Value="Center"/>
+								<Setter Property="Background" Value="{StaticResource Application.Secondary}"/>
+								<Setter Property="BorderBrush" Value="{StaticResource Application.Borders}"/>
+								<Setter Property="Foreground" Value="{StaticResource Application.Content}"/>
 								<Style.Triggers>
 									<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
 										<Setter Property="Foreground" Value="White"/>
@@ -215,7 +220,7 @@
 			<GridSplitter.Template>
 				<ControlTemplate>
 					<Border Background="Transparent">
-						<Border Width="2" Background="Black" Margin="0 10"/>
+						<Border Width="2" Background="{StaticResource Application.Borders}" Margin="0 10"/>
 					</Border>
 				</ControlTemplate>
 			</GridSplitter.Template>
@@ -229,15 +234,15 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<!-- Saved colours box -->
-			<ListBox SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
+			<ListBox Background="{StaticResource Application.Secondary}" BorderBrush="{StaticResource Application.Borders}" SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<DataTemplate.Resources>
 							<DataTemplate x:Key="ViewContent">
-								<TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{Binding Name}"/>
+								<TextBlock Margin="5 0 0 0" Foreground="{StaticResource Application.Content}" VerticalAlignment="Center" Text="{Binding Name}"/>
 							</DataTemplate>
 							<DataTemplate x:Key="EditContent">
-								<TextBox x:Name="editBox" Margin="5 0 0 0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FocusManager.FocusedElement="{Binding ElementName=editBox}" CaretIndex="{x:Static sys:Int32.MaxValue}">
+								<TextBox x:Name="editBox" Background="{StaticResource Application.Secondary}" BorderBrush="{StaticResource Application.Borders}" Foreground="{StaticResource Application.Content}" Margin="5 0 0 0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FocusManager.FocusedElement="{Binding ElementName=editBox}" CaretIndex="{x:Static sys:Int32.MaxValue}">
 									<TextBox.InputBindings>
 										<KeyBinding Key="Enter" Command="{Binding DataContext.ColourEditBoxEnterCommand, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"/>
 									</TextBox.InputBindings>
@@ -309,7 +314,7 @@
 				<Button Content="Export Colours" Command="{Binding ExportColoursCommand}"/>
 				<Button Content="Import Colours" Command="{Binding ImportColoursCommand}"/>
 			</StackPanel>
-			<CheckBox Grid.Row="3" Content="Save colours on close" IsChecked="{Binding SaveColoursOnClose}"/>
+			<CheckBox Foreground="{StaticResource Application.Content}" Grid.Row="3" Content="Save colours on close" IsChecked="{Binding SaveColoursOnClose}"/>
 		</Grid>
 	</Grid>
 </Window>
