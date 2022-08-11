@@ -226,6 +226,7 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="46"/>
 				<RowDefinition Height="100"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<!-- Saved colours box -->
 			<ListBox SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
@@ -308,6 +309,7 @@
 				<Button Content="Export Colours" Command="{Binding ExportColoursCommand}"/>
 				<Button Content="Import Colours" Command="{Binding ImportColoursCommand}"/>
 			</StackPanel>
+			<CheckBox Grid.Row="3" Content="Save colours on close" IsChecked="{Binding SaveColoursOnClose}"/>
 		</Grid>
 	</Grid>
 </Window>

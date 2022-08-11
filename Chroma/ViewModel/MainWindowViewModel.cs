@@ -15,6 +15,7 @@ using Chroma.View.Converters;
 using Chroma.Model.Functionality;
 using Chroma.Model.Utilities;
 using Microsoft.Win32;
+using System.Text.Json;
 
 namespace Chroma.ViewModel
 {
@@ -26,7 +27,7 @@ namespace Chroma.ViewModel
 		/// <summary>
 		/// Gets the path for the saved colours.
 		/// </summary>
-		public static string SavedColourFilePath => Path.Combine(Directory.GetCurrentDirectory(), "colours.json");
+		public static string SavedColourFilePath => Path.Combine(Directory.GetCurrentDirectory(), "config.json");
 		/// <summary>
 		/// Command triggered when the "Add" button is pressed underneath the colour group.
 		/// </summary>
@@ -103,7 +104,7 @@ namespace Chroma.ViewModel
 			ExportColoursCommand = new RelayCommand(ExportColours, colourExistCondition);
 			ImportColoursCommand = new RelayCommand(ImportColours, x => true);
 
-			SavedColours = new ObservableCollection<ColourItem>(ColourItem.ExtractFromJSON(SavedColourFilePath));
+			LoadSettings();
 
 			MouseHook.MouseAction += ColourPickerClickEvent;
 		}
@@ -312,7 +313,7 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public void ApplicationClosing(object? sender, EventArgs e)
 		{
-			ColourItem.CreateJsonFrom(SavedColourFilePath, SavedColours);
+			SaveSettings();
 		}
 		#endregion
 		#region Binding Properties
@@ -436,6 +437,67 @@ namespace Chroma.ViewModel
 			}
 		}
 		private bool _isOnTop;
+		public bool SaveColoursOnClose
+		{
+			get => _saveColoursOnClose;
+			set
+			{
+				_saveColoursOnClose = value;
+				OnPropertyChanged(nameof(SaveColoursOnClose));
+			}
+		}
+		private bool _saveColoursOnClose;
 		#endregion
+		/// <summary>
+		/// Loads the settings from the previous application session.
+		/// </summary>
+		public void LoadSettings()
+		{
+			using FileStream fs = File.OpenRead(SavedColourFilePath);
+			using StreamReader sr = new(fs);
+			using JsonDocument colourJson = JsonDocument.Parse(sr.ReadToEnd());
+
+			JsonConfig colours = (JsonConfig)colourJson.Deserialize(typeof(JsonConfig));
+			SavedColours = new ObservableCollection<ColourItem>(colours.Colours);
+			SaveColoursOnClose = colours.SaveColoursOnClose;
+		}
+
+		/// <summary>
+		/// Saves the settings from the previous application session.
+		/// </summary>
+		public void SaveSettings()
+		{
+			ColourItem[] items;
+
+			if (SaveColoursOnClose)
+			{
+				items = SavedColours.ToArray();
+			}
+			else
+			{
+				items = ColourItem.ExtractFromJSON(SavedColourFilePath).ToArray();
+			}
+
+			using FileStream fs = File.OpenWrite(SavedColourFilePath);
+
+			JsonConfig newFile = new()
+			{
+				Colours = items,
+				SaveColoursOnClose = SaveColoursOnClose
+			};
+
+			// Make sure to clear the previous data.
+			fs.SetLength(0);
+			fs.Flush();
+
+			JsonSerializerOptions outputOptions = new()
+			{
+				WriteIndented = true
+			};
+			string json = JsonSerializer.Serialize(newFile, outputOptions);
+			byte[] streamData = Encoding.UTF8.GetBytes(json);
+
+			fs.Write(streamData);
+		}
 	}
 }

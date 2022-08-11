@@ -27,5 +27,6 @@
 		"B": 255
 	  }
 	}
-  ]
+  ],
+  "SaveColoursOnClose": true
 }
