@@ -77,6 +77,10 @@ namespace Chroma.ViewModel
 		/// Command triggered when the export colours button has been pressed.
 		/// </summary>
 		public ICommand ExportColoursCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the import colours button has been pressed.
+		/// </summary>
+		public ICommand ImportColoursCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
@@ -97,6 +101,7 @@ namespace Chroma.ViewModel
 			ColourPickerButtonCommand = new RelayCommand(StartColourPicker, colourRequiredCondition);
 			ClearColoursCommand = new RelayCommand(ClearColours, colourExistCondition);
 			ExportColoursCommand = new RelayCommand(ExportColours, colourExistCondition);
+			ImportColoursCommand = new RelayCommand(ImportColours, x => true);
 
 			SavedColours = new ObservableCollection<ColourItem>(ColourItem.ExtractFromJSON(SavedColourFilePath));
 
@@ -247,6 +252,46 @@ namespace Chroma.ViewModel
 			if (userHasSaved is true)
 			{
 				ColourItem.CreateJsonFrom(dialog.FileName, SavedColours);
+			}
+		}
+
+		/// <summary>
+		/// Triggered when the import colours button has been pressed.
+		/// </summary>
+		public void ImportColours(object? parameter)
+		{
+			MessageBoxResult result = MessageBox.Show("Do you want to clear all current colours first before importing?",
+				"Import Colours",
+				MessageBoxButton.YesNoCancel,
+				MessageBoxImage.Question);
+
+			if (result == MessageBoxResult.Cancel)
+			{
+				return;
+			}
+
+			OpenFileDialog dialog = new()
+			{
+				Title = "Import Colours",
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+				Filter = "JSON Files (*.json)|*.json|All files (*.*)|*.*"
+			};
+
+			bool? userHasSelected = dialog.ShowDialog();
+
+			if (userHasSelected is true)
+			{
+				IList<ColourItem> importedColours = ColourItem.ExtractFromJSON(dialog.FileName);
+				if (result == MessageBoxResult.Yes)
+				{
+					SavedColours = new ObservableCollection<ColourItem>(importedColours);
+				}
+				else
+				{
+					// Do the concatenation in a separate collection as each item added would notfiy property changed.
+					IEnumerable<ColourItem> mixedItems = SavedColours.Concat(importedColours);
+					SavedColours = new ObservableCollection<ColourItem>(mixedItems);
+				}
 			}
 		}
 
