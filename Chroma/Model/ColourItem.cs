@@ -97,7 +97,11 @@ namespace Chroma.Model
 			fs.SetLength(0);
 			fs.Flush();
 
-			string json = JsonSerializer.Serialize(newFile);
+			JsonSerializerOptions outputOptions = new()
+			{
+				WriteIndented = true
+			};
+			string json = JsonSerializer.Serialize(newFile, outputOptions);
 			byte[] streamData = Encoding.UTF8.GetBytes(json);
 
 			fs.Write(streamData);

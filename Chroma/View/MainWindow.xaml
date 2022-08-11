@@ -305,7 +305,7 @@
 					</Style>
 				</StackPanel.Resources>
 				<Button Content="Clear Colours" Command="{Binding ClearColoursCommand}"/>
-				<Button Content="Export Colours"/>
+				<Button Content="Export Colours" Command="{Binding ExportColoursCommand}"/>
 				<Button Content="Import Colours"/>
 			</StackPanel>
 		</Grid>

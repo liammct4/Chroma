@@ -14,6 +14,7 @@ using Chroma.Model;
 using Chroma.View.Converters;
 using Chroma.Model.Functionality;
 using Chroma.Model.Utilities;
+using Microsoft.Win32;
 
 namespace Chroma.ViewModel
 {
@@ -72,11 +73,16 @@ namespace Chroma.ViewModel
 		/// Command triggered when the clear colours button has been pressed.
 		/// </summary>
 		public ICommand ClearColoursCommand { get; set; }
+		/// <summary>
+		/// Command triggered when the export colours button has been pressed.
+		/// </summary>
+		public ICommand ExportColoursCommand { get; set; }
 
 		public MainWindowViewModel()
 		{
 			GradientScaleConverter.ViewModel = this;
 			Func<object, bool> colourRequiredCondition = x => CurrentColour is not null;
+			Func<object, bool> colourExistCondition = x => SavedColours.Count >= 1;
 
 			// Link commands.
 			AddColourCommand = new RelayCommand(AddColour, x => true);
@@ -89,7 +95,8 @@ namespace Chroma.ViewModel
 			ColoursMoveDownButtonCommand = new RelayCommand(MoveDown, colourRequiredCondition);
 			RandomizeColourButtonCommand = new RelayCommand(RandomizeColour, colourRequiredCondition);
 			ColourPickerButtonCommand = new RelayCommand(StartColourPicker, colourRequiredCondition);
-			ClearColoursCommand = new RelayCommand(ClearColours, x => true);
+			ClearColoursCommand = new RelayCommand(ClearColours, colourExistCondition);
+			ExportColoursCommand = new RelayCommand(ExportColours, colourExistCondition);
 
 			SavedColours = new ObservableCollection<ColourItem>(ColourItem.ExtractFromJSON(SavedColourFilePath));
 
@@ -220,6 +227,26 @@ namespace Chroma.ViewModel
 			if (result == MessageBoxResult.Yes)
 			{
 				SavedColours.Clear();
+			}
+		}
+
+		/// <summary>
+		/// Triggered when the export colours button has been pressed.
+		/// </summary>
+		public void ExportColours(object? parameter)
+		{
+			SaveFileDialog dialog = new()
+			{
+				Title = "Export File",
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+				Filter = "JSON Files (*.json)|*.json|All files (*.*)|*.*"
+			};
+
+			bool? userHasSaved = dialog.ShowDialog();
+
+			if (userHasSaved is true)
+			{
+				ColourItem.CreateJsonFrom(dialog.FileName, SavedColours);
 			}
 		}
 
