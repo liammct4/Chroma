@@ -75,6 +75,34 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+	<Style x:Key="ExpanderButton" TargetType="{x:Type Button}" BasedOn="{StaticResource ThemedButton}">
+		<Style.Triggers>
+			<Trigger Property="IsMouseOver" Value="true">
+				<Trigger.EnterActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetProperty="Width" To="150" Duration="0:0:0:0.5">
+								<DoubleAnimation.EasingFunction>
+									<CubicEase/>
+								</DoubleAnimation.EasingFunction>
+							</DoubleAnimation>
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.EnterActions>
+				<Trigger.ExitActions>
+					<BeginStoryboard>
+						<Storyboard>
+							<DoubleAnimation Storyboard.TargetProperty="Width" To="100" Duration="0:0:0:0.5">
+								<DoubleAnimation.EasingFunction>
+									<CubicEase/>
+								</DoubleAnimation.EasingFunction>
+							</DoubleAnimation>
+						</Storyboard>
+					</BeginStoryboard>
+				</Trigger.ExitActions>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
 	<!-- Other. -->
 	<Geometry x:Key="copyIconData">M 1.3229166 0 H 3.175 V 0.26458335 H 1.3229166 Z m 0 2.9104166 H 3.1712958 V 3.175 H 1.3229166 Z M 3.175 0 H 3.4395833 V 3.175 H 3.175 Z M 1.0583333 0 H 1.3229166 V 3.175 H 1.0583333 Z M 0.52916667 0.52916667 H 1.0583333 V 0.79374999 H 0.52916667 Z M 2.3812499 3.175 H 2.6458333 V 3.4395833 H 2.3812499 Z M 0.26458335 3.4395835 H 2.6458333 V 3.7041669 H 0.26458335 Z m 1.2e-7 -2.9104168 H 0.52916682 V 3.4395834 H 0.26458347 Z</Geometry>
 	<Style x:Key="copyIcon" TargetType="{x:Type Path}">

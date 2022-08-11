@@ -310,7 +310,7 @@
 			<!-- Colour controls -->
 			<StackPanel Grid.Row="2" Margin="0 5 0 0">
 				<StackPanel.Resources>
-					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ThemedButton}">
+					<Style TargetType="{x:Type Button}" BasedOn="{StaticResource ExpanderButton}">
 						<Setter Property="Width" Value="100"/>
 						<Setter Property="FontSize" Value="13"/>
 						<Setter Property="HorizontalAlignment" Value="Left"/>
