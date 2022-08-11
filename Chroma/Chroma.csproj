@@ -8,11 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="colours.json" />
     <None Remove="View\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Remove="Assets\copy_icon.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="colours.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

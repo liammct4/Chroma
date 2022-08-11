@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chroma.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace Chroma
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public MainWindowViewModel ViewModel
+		{
+			get => (MainWindowViewModel)DataContext;
+			set => DataContext = value;
+		}
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			Closing += ViewModel.ApplicationClosing;
 		}
 	}
 }

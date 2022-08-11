@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -21,6 +22,10 @@ namespace Chroma.ViewModel
 	/// </summary>
 	public class MainWindowViewModel : ViewModelBase
 	{
+		/// <summary>
+		/// Gets the path for the saved colours.
+		/// </summary>
+		public static string SavedColourFilePath => Path.Combine(Directory.GetCurrentDirectory(), "colours.json");
 		/// <summary>
 		/// Command triggered when the "Add" button is pressed underneath the colour group.
 		/// </summary>
@@ -66,7 +71,6 @@ namespace Chroma.ViewModel
 
 		public MainWindowViewModel()
 		{
-			Chroma.Model.Utilities.ColourUtilities.GetColourAtMousePoint();
 			GradientScaleConverter.ViewModel = this;
 			Func<object, bool> colourRequiredCondition = x => CurrentColour is not null;
 
@@ -82,15 +86,7 @@ namespace Chroma.ViewModel
 			RandomizeColourButtonCommand = new RelayCommand(RandomizeColour, colourRequiredCondition);
 			ColourPickerButtonCommand = new RelayCommand(StartColourPicker, colourRequiredCondition);
 
-			// Test data.
-			SavedColours = new ObservableCollection<ColourItem>()
-			{
-				new ColourItem() { Colour = Color.FromArgb(255, 100, 30, 180) },
-				new ColourItem() { Colour = Color.FromArgb(255, 130, 60, 90) },
-				new ColourItem() { Colour = Color.FromArgb(255, 59, 10, 130) },
-				new ColourItem() { Colour = Color.FromArgb(255, 10, 90, 110) },
-				new ColourItem() { Colour = Color.FromArgb(255, 255, 110, 100) },
-			};
+			SavedColours = new ObservableCollection<ColourItem>(ColourItem.ExtractFromJSON(SavedColourFilePath));
 
 			MouseHook.MouseAction += ColourPickerClickEvent;
 		}
@@ -220,6 +216,14 @@ namespace Chroma.ViewModel
 
 			await Task.Delay(100);
 			IsOnTop = false;
+		}
+
+		/// <summary>
+		/// Occurs when the application closes. The current colours will be saved.
+		/// </summary>
+		public void ApplicationClosing(object? sender, EventArgs e)
+		{
+			ColourItem.CreateJsonFrom(SavedColourFilePath, SavedColours);
 		}
 		#endregion
 		#region Binding Properties

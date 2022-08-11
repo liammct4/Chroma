@@ -46,7 +46,7 @@ namespace Chroma.Model.Utilities
 		/// <summary>
 		/// Gets the colour underneath the cursor.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The colour of the pixel underneath the cursor.</returns>
 		public static Color GetColourAtMousePoint()
 		{
 			Drawing.Rectangle rect = WinForms.Screen.GetBounds(new Drawing.Point(0, 0));
@@ -59,8 +59,6 @@ namespace Chroma.Model.Utilities
 			}
 
 			Drawing.Color colour = bitmap.GetPixel(mousePoint.X, mousePoint.Y);
-
-			bitmap.Save(@"C:\Users\Liam\Desktop\Winforms.png");
 
 			return Color.FromArgb(colour.A, colour.R, colour.G, colour.B);
 		}
