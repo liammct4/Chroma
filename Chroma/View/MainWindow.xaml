@@ -322,7 +322,8 @@
 				<Button Content="Export Colours" Command="{Binding ExportColoursCommand}"/>
 				<Button Content="Import Colours" Command="{Binding ImportColoursCommand}"/>
 			</StackPanel>
-			<CheckBox Foreground="{StaticResource Application.Content}" Grid.Row="3" Content="Save colours on close" IsChecked="{Binding SaveColoursOnClose}"/>
+			<CheckBox Style="{DynamicResource ThemedToggleSwitch}" Foreground="{StaticResource Application.Content}" Grid.Row="3" Content="Save colours on close" IsChecked="{Binding SaveColoursOnClose}"/>
+			<!--"{Binding SaveColoursOnClose}"/>-->
 		</Grid>
 	</Grid>
 </Window>
