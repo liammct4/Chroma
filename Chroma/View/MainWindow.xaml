@@ -242,7 +242,32 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<!-- Saved colours box -->
-			<ListBox Background="{StaticResource Application.Secondary}" BorderBrush="{StaticResource Application.Borders}" SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
+			<ListBox Background="{StaticResource Application.Secondary}" BorderThickness="1" BorderBrush="{StaticResource Application.Borders}" SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
+				<ListBox.Style>
+					<Style TargetType="{x:Type ListBox}">
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="{x:Type ListBox}">
+									<Grid Width="Auto" Height="Auto">
+										<Border x:Name="Border" 
+                                        BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"/>
+										<ScrollViewer Focusable="false" IsTabStop="False" HorizontalScrollBarVisibility="Disabled">
+											<StackPanel IsItemsHost="true"/>
+										</ScrollViewer>
+									</Grid>
+									<ControlTemplate.Triggers>
+										<Trigger Property="IsEnabled" Value="false">
+											<Setter TargetName="Border" Property="Border.Background" Value="{StaticResource Application.Secondary}"/>
+										</Trigger>
+										<Trigger Property="IsGrouping" Value="true">
+											<Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+										</Trigger>
+									</ControlTemplate.Triggers>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</ListBox.Style>
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<DataTemplate.Resources>
