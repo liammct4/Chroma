@@ -8,6 +8,8 @@
 	<SolidColorBrush x:Key="Application.Borders.Dark" Color="#64666b"/>
 	<SolidColorBrush x:Key="Application.Content" Color="#fafaff"/>
 	<FontFamily x:Key="MainFont">pack://application:,,,/View/Fonts/#Roboto</FontFamily>
+	<!-- Override focus visual colour to white instead of black so it can be seen. -->
+	<SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="White"/>
 	<!-- Converters -->
 	<convert:ARGBColourConverter x:Key="argbConverter"/>
 	<convert:RGBColourConverter x:Key="rgbConverter"/>
