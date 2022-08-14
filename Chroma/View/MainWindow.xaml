@@ -255,6 +255,10 @@
 			</Grid.RowDefinitions>
 			<!-- Saved colours box -->
 			<ListBox Background="{StaticResource Application.Secondary}" BorderThickness="1" BorderBrush="{StaticResource Application.Borders.Bright}" SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
+				<ListBox.InputBindings>
+					<KeyBinding Modifiers="Shift" Key="Up" Command="{Binding ColoursMoveCommand}" CommandParameter="{x:Static vm:ItemDirection.Up}"/>
+					<KeyBinding Modifiers="Shift" Key="Down" Command="{Binding ColoursMoveCommand}" CommandParameter="{x:Static vm:ItemDirection.Down}"/>
+				</ListBox.InputBindings>
 				<ListBox.Style>
 					<Style TargetType="{x:Type ListBox}">
 						<Setter Property="Template">
@@ -341,8 +345,8 @@
 				<Button Content="Rename" Grid.Row="1" Command="{Binding RenameColourCommand}"/>
 				<Button Content="Duplicate" Grid.Column="1" Grid.Row="1" Command="{Binding DuplicateButtonCommand}"/>
 				<!-- These arrows are only temporary. -->
-				<Button Content="↑" Grid.Column="2" Command="{Binding ColoursMoveUpButtonCommand}"/>
-				<Button Content="↓" Grid.Column="2" Grid.Row="1" Command="{Binding ColoursMoveDownButtonCommand}"/>
+				<Button Content="↑" Grid.Column="2" Command="{Binding ColoursMoveCommand}" CommandParameter="{x:Static vm:ItemDirection.Up}"/>
+				<Button Content="↓" Grid.Column="2" Grid.Row="1" Command="{Binding ColoursMoveCommand}" CommandParameter="{x:Static vm:ItemDirection.Down}"/>
 			</Grid>
 			<!-- Colour controls -->
 			<StackPanel Grid.Row="2" Margin="0 5 0 0">

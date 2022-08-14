@@ -55,13 +55,9 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public ICommand DuplicateButtonCommand { get; set; }
 		/// <summary>
-		/// Command triggered when the move up button has been pressed.
+		/// Command triggered when the move up/down button has been pressed or the move up/down key has been pressed.
 		/// </summary>
-		public ICommand ColoursMoveUpButtonCommand { get; set; }
-		/// <summary>
-		/// Command triggered when the move down button has been pressed.
-		/// </summary>
-		public ICommand ColoursMoveDownButtonCommand { get; set; }
+		public ICommand ColoursMoveCommand { get; set; }
 		/// <summary>
 		/// Command triggered when the randomize button has been pressed.
 		/// </summary>
@@ -100,8 +96,7 @@ namespace Chroma.ViewModel
 			ColourEditBoxEnterCommand = new RelayCommand(ColourEditBoxEnter, x => IsEdit);
 			CopyColourButtonCommand = new RelayCommand(CopyColour, colourRequiredCondition);
 			DuplicateButtonCommand = new RelayCommand(DuplicateColour, colourRequiredCondition);
-			ColoursMoveUpButtonCommand = new RelayCommand(MoveUp, colourRequiredCondition);
-			ColoursMoveDownButtonCommand = new RelayCommand(MoveDown, colourRequiredCondition);
+			ColoursMoveCommand = new RelayCommand(MoveColour, colourRequiredCondition);
 			RandomizeColourButtonCommand = new RelayCommand(RandomizeColour, colourRequiredCondition);
 			ColourPickerButtonCommand = new RelayCommand(StartColourPicker, colourRequiredCondition);
 			ClearColoursCommand = new RelayCommand(ClearColours, colourExistCondition);
@@ -178,33 +173,35 @@ namespace Chroma.ViewModel
 		/// 
 		/// If no colour is selected, the command isn't ran.
 		/// </summary>
-		public void MoveUp(object? parameter)
+		public void MoveColour(object? parameter)
 		{
-			int index = SavedColours.IndexOf(CurrentColour);
-
-			if (index == 0)
+			if (parameter is not ItemDirection)
 			{
 				return;
 			}
 
-			SavedColours.Move(index, index - 1);
-		}
+			// The parameter indicates which direction to go (provided by the command binding in view).
+			ItemDirection direction = (ItemDirection)parameter;
 
-		/// <summary>
-		/// Triggered when the move down button is pressed.
-		/// 
-		/// If no colour is selected, the command isn't ran.
-		/// </summary>
-		public void MoveDown(object? parameter)
-		{
 			int index = SavedColours.IndexOf(CurrentColour);
+			int newIndex = index;
 
-			if (index + 1 > SavedColours.Count - 1)
+			if (direction == ItemDirection.Up)
+			{
+				newIndex--;
+			}
+			else if (direction == ItemDirection.Down)
+			{
+				newIndex++;
+			}
+
+			// Check if the new index is out of bounds.
+			if (newIndex < 0 || newIndex > SavedColours.Count - 1)
 			{
 				return;
 			}
 
-			SavedColours.Move(index, index + 1);
+			SavedColours.Move(index, newIndex);
 		}
 
 		/// <summary>
