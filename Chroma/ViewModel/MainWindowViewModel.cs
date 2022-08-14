@@ -71,6 +71,10 @@ namespace Chroma.ViewModel
 		/// </summary>
 		public ICommand ColourPickerButtonCommand { get; set; }
 		/// <summary>
+		/// Command triggered while app is in colour picker mode and the escape key has been pressed indicating to cancel.
+		/// </summary>
+		public ICommand ColourPickerCancelCommand { get; set; }
+		/// <summary>
 		/// Command triggered when the clear colours button has been pressed.
 		/// </summary>
 		public ICommand ClearColoursCommand { get; set; }
@@ -103,6 +107,7 @@ namespace Chroma.ViewModel
 			ClearColoursCommand = new RelayCommand(ClearColours, colourExistCondition);
 			ExportColoursCommand = new RelayCommand(ExportColours, colourExistCondition);
 			ImportColoursCommand = new RelayCommand(ImportColours, x => true);
+			ColourPickerCancelCommand = new RelayCommand(CancelColourPicker, x => IsColourPicker);
 
 			LoadSettings();
 
@@ -222,6 +227,17 @@ namespace Chroma.ViewModel
 		{
 			IsColourPicker = true;
 			IsOnTop = true;
+		}
+
+		/// <summary>
+		/// Triggered when the escape key has been pressed in colour picker mode.
+		/// </summary>
+		public async void CancelColourPicker(object? parameter)
+		{
+			IsColourPicker = false;
+
+			await Task.Delay(100);
+			IsOnTop = false;
 		}
 
 		/// <summary>

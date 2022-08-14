@@ -13,6 +13,9 @@
 		MaxWidth="800" MaxHeight="700"
 		WindowStartupLocation="CenterScreen"
 		Topmost="{Binding IsOnTop}">
+	<Window.InputBindings>
+		<KeyBinding Key="Esc" Command="{Binding ColourPickerCancelCommand}"/>
+	</Window.InputBindings>
 	<Window.DataContext>
 		<vm:MainWindowViewModel/>
 	</Window.DataContext>
