@@ -118,16 +118,16 @@
 						</Grid.RowDefinitions>
 						<!-- Alpha Slider -->
 						<TextBlock Text="A"/>
-						<Slider Value="{Binding A}"/>
+						<Slider Template="{DynamicResource ThemedSlider}" Value="{Binding A}"/>
 						<!-- Red Slider -->
 						<TextBlock Grid.Row="1" Text="R"/>
-						<Slider Grid.Row="1" Value="{Binding R}" />
+						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="1" Value="{Binding R}" />
 						<!-- Green Slider -->
 						<TextBlock Grid.Row="2" Text="G"/>
-						<Slider Grid.Row="2" Value="{Binding G}"/>
+						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="2" Value="{Binding G}"/>
 						<!-- Blue Slider -->
 						<TextBlock Grid.Row="3" Text="B"/>
-						<Slider Grid.Row="3" Value="{Binding B}"/>
+						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="3" Value="{Binding B}"/>
 					</Grid>
 					<!-- Colour text boxes -->
 					<Grid DockPanel.Dock="Top">
@@ -137,7 +137,7 @@
 								<Setter Property="Height" Value="18"/>
 								<Setter Property="VerticalContentAlignment" Value="Center"/>
 								<Setter Property="Background" Value="{StaticResource Application.Secondary}"/>
-								<Setter Property="BorderBrush" Value="{StaticResource Application.Borders}"/>
+								<Setter Property="BorderBrush" Value="{StaticResource Application.Borders.Bright}"/>
 								<Setter Property="Foreground" Value="{StaticResource Application.Content}"/>
 								<Style.Triggers>
 									<DataTrigger Binding="{Binding CurrentColour}" Value="{x:Null}">
@@ -150,7 +150,7 @@
 								<Setter Property="Panel.ZIndex" Value="1"/>
 								<Setter Property="Width" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource Self}}"/>
 								<Setter Property="Border.CornerRadius" Value="0"/>
-								<Setter Property="BorderBrush" Value="{StaticResource Application.Borders}"/>
+								<Setter Property="BorderBrush" Value="{StaticResource Application.Borders.Bright}"/>
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
@@ -229,7 +229,7 @@
 			<GridSplitter.Template>
 				<ControlTemplate>
 					<Border Background="Transparent">
-						<Border Width="2" Background="{StaticResource Application.Borders}" Margin="0 10"/>
+						<Border Width="2" Background="{StaticResource Application.Borders.Bright}" Margin="0 10"/>
 					</Border>
 				</ControlTemplate>
 			</GridSplitter.Template>
@@ -243,7 +243,7 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<!-- Saved colours box -->
-			<ListBox Background="{StaticResource Application.Secondary}" BorderThickness="1" BorderBrush="{StaticResource Application.Borders}" SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
+			<ListBox Background="{StaticResource Application.Secondary}" BorderThickness="1" BorderBrush="{StaticResource Application.Borders.Bright}" SelectedItem="{Binding CurrentColour}" SelectedIndex="0" ItemsSource="{Binding SavedColours}">
 				<ListBox.Style>
 					<Style TargetType="{x:Type ListBox}">
 						<Setter Property="Template">
@@ -276,7 +276,7 @@
 								<TextBlock Margin="5 0 0 0" Foreground="{StaticResource Application.Content}" VerticalAlignment="Center" Text="{Binding Name}"/>
 							</DataTemplate>
 							<DataTemplate x:Key="EditContent">
-								<TextBox x:Name="editBox" Background="{StaticResource Application.Secondary}" BorderBrush="{StaticResource Application.Borders}" Foreground="{StaticResource Application.Content}" Margin="5 0 0 0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FocusManager.FocusedElement="{Binding ElementName=editBox}" CaretIndex="{x:Static sys:Int32.MaxValue}">
+								<TextBox x:Name="editBox" Background="{StaticResource Application.Secondary}" BorderBrush="{StaticResource Application.Borders.Bright}" Foreground="{StaticResource Application.Content}" Margin="5 0 0 0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FocusManager.FocusedElement="{Binding ElementName=editBox}" CaretIndex="{x:Static sys:Int32.MaxValue}">
 									<TextBox.InputBindings>
 										<KeyBinding Key="Enter" Command="{Binding DataContext.ColourEditBoxEnterCommand, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"/>
 									</TextBox.InputBindings>
