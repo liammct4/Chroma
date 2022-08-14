@@ -78,11 +78,19 @@
 						</Button.Content>
 					</Button>
 				</StackPanel>
-				<Border CornerRadius="5" DockPanel.Dock="Right">
-					<Border.Background>
-						<SolidColorBrush Color="{Binding CurrentColour.Colour}"/>
-					</Border.Background>
-				</Border>
+				<Grid DockPanel.Dock="Right" UseLayoutRounding="True">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Border SnapsToDevicePixels="True" Background="Black" CornerRadius="5 0 0 5"/>
+					<Border SnapsToDevicePixels="True" Background="White" Grid.Column="1" CornerRadius="0 5 5 0"/>
+					<Border SnapsToDevicePixels="True" CornerRadius="5" Grid.ColumnSpan="2">
+						<Border.Background>
+							<SolidColorBrush Color="{Binding CurrentColour.Colour}"/>
+						</Border.Background>
+					</Border>
+				</Grid>
 			</DockPanel>
 			<Grid Grid.Row="1" Margin="10">
 				<Grid.ColumnDefinitions>
