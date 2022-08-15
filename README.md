@@ -6,6 +6,7 @@ Made in WPF for practice with MVVM. Since this is based in WPF, this is only com
 
 ## What the application looks like:
 ![1](https://user-images.githubusercontent.com/87785573/184686038-a5ad99ed-9a28-400b-ad68-b74b21d2e4a9.PNG)
+
 (Icon coming soon).
 
 ## Releases:
