@@ -86,6 +86,8 @@ namespace Chroma.ViewModel
 		public MainWindowViewModel()
 		{
 			GradientScaleConverter.ViewModel = this;
+			RGBChannelConverter.ViewModel = this;
+
 			Func<object, bool> colourRequiredCondition = x => CurrentColour is not null;
 			Func<object, bool> colourExistCondition = x => SavedColours.Count >= 1;
 
@@ -349,10 +351,6 @@ namespace Chroma.ViewModel
 				IsEdit = false;
 				OnPropertyChanged(nameof(CurrentColour));
 				OnPropertyChanged(nameof(Colour));
-				OnPropertyChanged(nameof(A));
-				OnPropertyChanged(nameof(R));
-				OnPropertyChanged(nameof(G));
-				OnPropertyChanged(nameof(B));
 				RelayCommand.RaiseCanExecuteChanged();
 			}
 		}
@@ -365,10 +363,6 @@ namespace Chroma.ViewModel
 				CurrentColour.Colour = value;
 				OnPropertyChanged(nameof(Colour));
 				OnPropertyChanged(nameof(CurrentColour));
-				OnPropertyChanged(nameof(A));
-				OnPropertyChanged(nameof(R));
-				OnPropertyChanged(nameof(G));
-				OnPropertyChanged(nameof(B));
 			}
 		}
 		public bool IsEdit
@@ -381,46 +375,6 @@ namespace Chroma.ViewModel
 			}
 		}
 		private bool _isEdit;
-		public int A
-		{
-			get => CurrentColour is null ? 255 : CurrentColour.Colour.A;
-			set
-			{
-				CurrentColour.Colour = Color.FromArgb((byte)value, CurrentColour.Colour.R, CurrentColour.Colour.G, CurrentColour.Colour.B);
-				OnPropertyChanged(nameof(A));
-				OnPropertyChanged(nameof(Colour));
-			}
-		}
-		public int R
-		{
-			get => CurrentColour is null ? 255 : CurrentColour.Colour.R;
-			set
-			{
-				CurrentColour.Colour = Color.FromArgb(CurrentColour.Colour.A, (byte)value, CurrentColour.Colour.G, CurrentColour.Colour.B);
-				OnPropertyChanged(nameof(R));
-				OnPropertyChanged(nameof(Colour));
-			}
-		}
-		public int G
-		{
-			get => CurrentColour is null ? 255 : CurrentColour.Colour.G;
-			set
-			{
-				CurrentColour.Colour = Color.FromArgb(CurrentColour.Colour.A, CurrentColour.Colour.R, (byte)value, CurrentColour.Colour.B);
-				OnPropertyChanged(nameof(G));
-				OnPropertyChanged(nameof(Colour));
-			}
-		}
-		public int B
-		{
-			get => CurrentColour is null ? 255 : CurrentColour.Colour.B;
-			set
-			{
-				CurrentColour.Colour = Color.FromArgb(CurrentColour.Colour.A, CurrentColour.Colour.R, CurrentColour.Colour.G, (byte)value);
-				OnPropertyChanged(nameof(B));
-				OnPropertyChanged(nameof(Colour));
-			}
-		}
 		public bool IsColourPicker
 		{
 			get => _isColourPicker;

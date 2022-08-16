@@ -18,6 +18,7 @@
 	<convert:BrightenedColourConverter x:Key="gradientConverter"/>
 	<convert:GradientScaleConverter x:Key="gradientScaleConverter"/>
 	<convert:BooleanInverterConverter x:Key="booleanInverter"/>
+	<convert:RGBChannelConverter x:Key="channelConverter"/>
 	<!-- Other. -->
 	<Geometry x:Key="copyIconData">M 1.3229166 0 H 3.175 V 0.26458335 H 1.3229166 Z m 0 2.9104166 H 3.1712958 V 3.175 H 1.3229166 Z M 3.175 0 H 3.4395833 V 3.175 H 3.175 Z M 1.0583333 0 H 1.3229166 V 3.175 H 1.0583333 Z M 0.52916667 0.52916667 H 1.0583333 V 0.79374999 H 0.52916667 Z M 2.3812499 3.175 H 2.6458333 V 3.4395833 H 2.3812499 Z M 0.26458335 3.4395835 H 2.6458333 V 3.7041669 H 0.26458335 Z m 1.2e-7 -2.9104168 H 0.52916682 V 3.4395834 H 0.26458347 Z</Geometry>
 	<Style x:Key="copyIcon" TargetType="{x:Type Path}">

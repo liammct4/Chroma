@@ -6,6 +6,7 @@
 		xmlns:local="clr-namespace:Chroma"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		xmlns:vm="clr-namespace:Chroma.ViewModel"
+		xmlns:view="clr-namespace:Chroma.View"
 		mc:Ignorable="d"
 		Title="Chroma"
 		Height="360" Width="550"
@@ -129,16 +130,16 @@
 						</Grid.RowDefinitions>
 						<!-- Alpha Slider -->
 						<TextBlock Text="A"/>
-						<Slider Template="{DynamicResource ThemedSlider}" Value="{Binding A}"/>
+						<Slider Template="{DynamicResource ThemedSlider}" Value="{Binding Colour, Converter={StaticResource channelConverter}, ConverterParameter={x:Static view:ColourChannel.Alpha}}"/>
 						<!-- Red Slider -->
 						<TextBlock Grid.Row="1" Text="R"/>
-						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="1" Value="{Binding R}" />
+						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="1" Value="{Binding Colour, Converter={StaticResource channelConverter}, ConverterParameter={x:Static view:ColourChannel.Red}}" />
 						<!-- Green Slider -->
 						<TextBlock Grid.Row="2" Text="G"/>
-						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="2" Value="{Binding G}"/>
+						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="2" Value="{Binding Colour, Converter={StaticResource channelConverter}, ConverterParameter={x:Static view:ColourChannel.Green}}"/>
 						<!-- Blue Slider -->
 						<TextBlock Grid.Row="3" Text="B"/>
-						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="3" Value="{Binding B}"/>
+						<Slider Template="{DynamicResource ThemedSlider}" Grid.Row="3" Value="{Binding Colour, Converter={StaticResource channelConverter}, ConverterParameter={x:Static view:ColourChannel.Blue}}"/>
 					</Grid>
 					<!-- Colour text boxes -->
 					<Grid DockPanel.Dock="Top">
