@@ -12,4 +12,5 @@ Made in WPF for practice with MVVM. Since this is based in WPF, this is only com
 ![preview](https://user-images.githubusercontent.com/87785573/185499193-8980e715-1f74-4f3b-b250-d592a9235b84.PNG)
 
 ## Releases:
-V1.0 Coming soon!
+### Latest Release (V1.0):
+- [V1.0](https://github.com/liammct4/Chroma/releases/tag/v1.0)
